@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { auth } from "../firebase/index";
+import { auth, db, FirebaseTimestamp } from "../firebase/index";
+
+const userRef = db.collection('users')
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -24,15 +26,28 @@ const SignUp = () => {
     
     try {
       await auth.createUserWithEmailAndPassword(emailInput, passwordInput)
-      .then((result) => {
+      .then(async (result) => {
         const user = result.user;
-        
+        const uid = user.uid
+        const timestamp = FirebaseTimestamp.now()
+
+        const userInitialData = {
+          created_at: timestamp,
+          email: email,
+          uid: uid,
+          updated_at: timestamp,
+        }
+
+        // console.log(`uid: ${uid}`)
+        userRef.doc(uid).set(userInitialData) //uidを指定してsetした---
+
         console.log("user, uid");
         console.log(user); // Im objectが入ってる
         console.log(user.uid); // 勝手に生成される文字列が入ってる
       })
     } catch (error) {
-      alert(error);
+      // alert(error);
+      console.log(error)
     }
   };
   
