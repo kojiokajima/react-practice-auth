@@ -11,12 +11,16 @@ const SignUp = () => {
     event.preventDefault();
     // console.log(`--Email: ${email} :: Password: ${password}--`)
     signup(email, password);
+    setEmail('')
+    setPassword('')
   };
-
+  
   const handleSubmitLogin = (event) => {
     event.preventDefault();
     // console.log(`--Email: ${email} :: Password: ${password}--`)
     login(email, password);
+    setEmail('')
+    setPassword('')
   };
 
   const signup = async (email, password) => {
@@ -39,7 +43,9 @@ const SignUp = () => {
         }
 
         // console.log(`uid: ${uid}`)
-        userRef.doc(uid).set(userInitialData) //uidを指定してsetした---
+        userRef.doc(uid).set(userInitialData) //uidを指定してデータベースにsetした---
+
+        alert("Signed Up Successfully!")
 
         console.log("user, uid");
         console.log(user); // Im objectが入ってる
