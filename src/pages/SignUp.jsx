@@ -7,6 +7,20 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const handleInputEmail = (e) => {
+    const inputEmail = e.target.value
+    console.log(`Email: ${e.target.value}`)
+    setEmail(inputEmail)
+    console.log(`email: ${email}`)
+  }
+
+  const handleInputPassword = (e) => {
+    const inputPassword = e.target.value
+    console.log(`Pssword: ${e.target.value}`)
+    setPassword(inputPassword)
+    console.log(`password: ${password}`)
+  }
+
   const handleSubmitSignup = (event) => {
     event.preventDefault();
     // console.log(`--Email: ${email} :: Password: ${password}--`)
@@ -94,7 +108,7 @@ const SignUp = () => {
             name="email"
             type="email"
             placeholder="Email"
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={handleInputEmail}
           />
         </label>
         <label>
@@ -103,21 +117,31 @@ const SignUp = () => {
             name="password"
             type="password"
             placeholder="Password"
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={handleInputPassword}
           />
         </label>
         <button type="submit">Sign Up</button>
       </form>
       <br/><br/>
       <h1>Log in</h1>
-      <form onSubmit={handleSubmitLogin}>
+      <form onSubmit={handleSubmitLogin}> 
+      <label>
+        First name
+        <input
+          name="email"
+          type="text"
+          placeholder="First Name"
+          onChange
+        />
+      </label>
+        <br/>
         <label>
           Email
           <input
             name="email"
             type="email"
             placeholder="Email"
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={handleInputEmail}
           />
         </label>
         <label>
@@ -126,7 +150,7 @@ const SignUp = () => {
             name="password"
             type="password"
             placeholder="Password"
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={handleInputPassword}
           />
         </label>
         <button type="submit">Sign Up</button>
