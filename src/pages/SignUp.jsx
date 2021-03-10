@@ -6,6 +6,8 @@ const userRef = db.collection('users')
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("")
+  const [lastName, setLastName] = useState("")
 
   const handleInputEmail = (e) => {
     const inputEmail = e.target.value
@@ -24,7 +26,7 @@ const SignUp = () => {
   const handleSubmitSignup = (event) => {
     event.preventDefault();
     // console.log(`--Email: ${email} :: Password: ${password}--`)
-    signup(email, password);
+    signup(email, password, firstName, lastName);
     setEmail('')
     setPassword('')
   };
@@ -37,7 +39,7 @@ const SignUp = () => {
     setPassword('')
   };
 
-  const signup = async (email, password) => {
+  const signup = async (email, password, firstName, lastName) => {
     const emailInput = email;
     const passwordInput = password;
     console.log(`${emailInput} :: ${passwordInput}`);
@@ -52,6 +54,10 @@ const SignUp = () => {
         const userInitialData = {
           created_at: timestamp,
           email: email,
+          name: {
+            first_name: firstName,
+            last_name: lastName
+          },
           uid: uid,
           updated_at: timestamp,
         }
@@ -103,6 +109,25 @@ const SignUp = () => {
       <h1>Sign up</h1>
       <form onSubmit={handleSubmitSignup}>
         <label>
+          First name
+          <input
+            name="lastname"
+            type="text"
+            placeholder="First Name"
+            onChange={(e) => setFirstName(e.target.value)}
+          />
+        </label>
+        <label>
+          Last name
+          <input
+            name="lastname"
+            type="text"
+            placeholder="Last Name"
+            onChange={(e) => setLastName(e.target.value)}
+          />
+        </label>
+        <br/>
+        <label>
           Email
           <input
             name="email"
@@ -125,16 +150,6 @@ const SignUp = () => {
       <br/><br/>
       <h1>Log in</h1>
       <form onSubmit={handleSubmitLogin}> 
-      <label>
-        First name
-        <input
-          name="email"
-          type="text"
-          placeholder="First Name"
-          onChange
-        />
-      </label>
-        <br/>
         <label>
           Email
           <input
