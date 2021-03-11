@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import {Link, useHistory} from 'react-router-dom'
+import {Link, withRouter, Redirect, useHistory} from 'react-router-dom'
 
 import { auth } from "../firebase/index";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isSignedIn, setIsSignedIn] = useState(false)
 
   const history = useHistory()
 
@@ -19,7 +20,8 @@ const SignIn = () => {
     setPassword(e.target.value)
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault()
     signIn(email, password)
     setEmail('')
     setPassword('')
@@ -34,11 +36,19 @@ const SignIn = () => {
         console.log("user, uid");
         console.log(user); // Im objectが入ってる
         console.log(user.uid); // 勝手に生成される文字列が入ってる
+        
+        
         auth.onAuthStateChanged((user) => {
           if (user) {
+            alert("user exist")
+            console.log("---------------")
             console.log("User exist:");
-            console.log(user);
-            history.push('/logedin')
+            console.log(user); // Im objectが入ってる
+            console.log(auth.currentUser);
+            history.push('/loggedin')
+            // <Redirect to='/loggedin' />
+
+            history.push('/loggedin')
 
           } else {
             console.log("User DOES NOT exist");
@@ -50,10 +60,16 @@ const SignIn = () => {
     }
   };
 
+  const redirectToSignUp = () => {
+    // console.log("Clicked")
+    // <Redirect to="/singup" />
+    history.push('/')
+  }
+
   return (
     <div>
       <h1>Log in</h1>
-      <form onSubmit={handleSubmit} method="POST" >
+      <form onSubmit={handleSubmit}>
         <label>
           Email
           <input
@@ -72,14 +88,15 @@ const SignIn = () => {
             onChange={handleInputPassword}
           />
         </label>
-        <button type="submit">Sign Up</button>
+        <button type="submit">Sign In</button>
       </form>
       <br/><br/>
       <p>
         <Link to="/">don't have an account?</Link>
       </p>
+      <p onClick={redirectToSignUp}>Redirect</p>
     </div>
   );
 };
 
-export default SignIn;
+export default withRouter(SignIn);

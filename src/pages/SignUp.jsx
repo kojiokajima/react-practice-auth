@@ -10,6 +10,7 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("")
   const [lastName, setLastName] = useState("")
+  const [isSigneIn, setIsSignedIn] = useState(false)
 
   const handleInputEmail = (e) => {
     const inputEmail = e.target.value
@@ -63,6 +64,8 @@ const SignUp = () => {
           uid: uid,
           updated_at: timestamp,
         }
+
+        setIsSignedIn(true)
 
         auth.onAuthStateChanged((user) => {
           if(user) {
@@ -160,7 +163,7 @@ const SignUp = () => {
       </form>
       <br/><br/>
       <p>
-        <Link to='/signup'>Already have an account?</Link>
+        <Link to='/signin'>Already have an account?</Link>
       </p>
     </div>
   );
