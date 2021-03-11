@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { auth, db, FirebaseTimestamp } from "../firebase/index";
 
+// ---------------GET USERS COLLECTION FROM FIRESTORE---------------
 const userRef = db.collection('users')
 
 const SignUp = () => {
@@ -8,19 +10,20 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("")
   const [lastName, setLastName] = useState("")
+  const [isSigneIn, setIsSignedIn] = useState(false)
 
   const handleInputEmail = (e) => {
     const inputEmail = e.target.value
-    console.log(`Email: ${e.target.value}`)
+    // console.log(`Email: ${e.target.value}`)
     setEmail(inputEmail)
-    console.log(`email: ${email}`)
+    // console.log(`email: ${email}`)
   }
 
   const handleInputPassword = (e) => {
     const inputPassword = e.target.value
-    console.log(`Pssword: ${e.target.value}`)
+    // console.log(`Pssword: ${e.target.value}`)
     setPassword(inputPassword)
-    console.log(`password: ${password}`)
+    // console.log(`password: ${password}`)
   }
 
   const handleSubmitSignup = (event) => {
@@ -31,18 +34,18 @@ const SignUp = () => {
     setPassword('')
   };
   
-  const handleSubmitLogin = (event) => {
-    event.preventDefault();
-    // console.log(`--Email: ${email} :: Password: ${password}--`)
-    login(email, password);
-    setEmail('')
-    setPassword('')
-  };
+  // const handleSubmitLogin = (event) => {
+  //   event.preventDefault();
+  //   // console.log(`--Email: ${email} :: Password: ${password}--`)
+  //   login(email, password);
+  //   setEmail('')
+  //   setPassword('')
+  // };
 
+// ---------------SIGN UP---------------
   const signup = async (email, password, firstName, lastName) => {
     const emailInput = email;
     const passwordInput = password;
-    console.log(`${emailInput} :: ${passwordInput}`);
     
     try {
       await auth.createUserWithEmailAndPassword(emailInput, passwordInput)
@@ -62,14 +65,24 @@ const SignUp = () => {
           updated_at: timestamp,
         }
 
+        setIsSignedIn(true)
+
+        auth.onAuthStateChanged((user) => {
+          if(user) {
+            console.log("user created")
+          } else {
+            console.log("user NOT created")
+          }
+        })
+
         // console.log(`uid: ${uid}`)
         userRef.doc(uid).set(userInitialData) //uidを指定してデータベースにsetした---
 
         alert("Signed Up Successfully!")
 
-        console.log("user, uid");
-        console.log(user); // Im objectが入ってる
-        console.log(user.uid); // 勝手に生成される文字列が入ってる
+        // console.log("user, uid");
+        // console.log(user); // Im objectが入ってる
+        // console.log(user.uid); // 勝手に生成される文字列が入ってる
       })
     } catch (error) {
       // alert(error);
@@ -77,32 +90,33 @@ const SignUp = () => {
     }
   };
   
-  const login = async (email, password) => {
-    const emailInput = email;
-    const passwordInput = password;
+  // ---------------SIGN IN---------------
+  // const login = async (email, password) => {
+  //   const emailInput = email;
+  //   const passwordInput = password;
     
-    try {
-      await auth.signInWithEmailAndPassword(emailInput, passwordInput)
-      .then((result) => {
-        const user = result.user
+  //   try {
+  //     await auth.signInWithEmailAndPassword(emailInput, passwordInput)
+  //     .then((result) => {
+  //       const user = result.user
         
-        console.log(result)
-        console.log("user, uid");
-        console.log(user);  // Im objectが入ってる
-        console.log(user.uid);  // 勝手に生成される文字列が入ってる
-        auth.onAuthStateChanged((user) => {
-          if (user) {
-            console.log("User exist:")
-            console.log(user)
-          } else {
-            console.log("User DOES NOT exist")
-          }
-        })
-        })
-    } catch (error) {
-      alert(error)
-    }
-  }
+  //       console.log(result)
+  //       console.log("user, uid");
+  //       console.log(user);  // Im objectが入ってる
+  //       console.log(user.uid);  // 勝手に生成される文字列が入ってる
+  //       auth.onAuthStateChanged((user) => {
+  //         if (user) {
+  //           console.log("User exist:")
+  //           console.log(user)
+  //         } else {
+  //           console.log("User DOES NOT exist")
+  //         }
+  //       })
+  //       })
+  //   } catch (error) {
+  //     alert(error)
+  //   }
+  // }
 
   return (
     <div>
@@ -148,28 +162,9 @@ const SignUp = () => {
         <button type="submit">Sign Up</button>
       </form>
       <br/><br/>
-      <h1>Log in</h1>
-      <form onSubmit={handleSubmitLogin}> 
-        <label>
-          Email
-          <input
-            name="email"
-            type="email"
-            placeholder="Email"
-            onChange={handleInputEmail}
-          />
-        </label>
-        <label>
-          Password
-          <input
-            name="password"
-            type="password"
-            placeholder="Password"
-            onChange={handleInputPassword}
-          />
-        </label>
-        <button type="submit">Sign Up</button>
-      </form>
+      <p>
+        <Link to='/signin'>Already have an account?</Link>
+      </p>
     </div>
   );
 };
