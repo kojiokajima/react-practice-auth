@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 import { auth, db, FirebaseTimestamp } from "../firebase/index";
+import {AuthContext} from '../App'
 
 // ---------------GET USERS COLLECTION FROM FIRESTORE---------------
 const userRef = db.collection('users')
@@ -11,6 +12,9 @@ const SignUp = () => {
   const [firstName, setFirstName] = useState("")
   const [lastName, setLastName] = useState("")
   const [isSigneIn, setIsSignedIn] = useState(false)
+  const [isAuth, setIsAuth] = useContext(AuthContext)
+
+  const history = useHistory()
 
   const handleInputEmail = (e) => {
     const inputEmail = e.target.value
@@ -70,8 +74,12 @@ const SignUp = () => {
         auth.onAuthStateChanged((user) => {
           if(user) {
             console.log("user created")
+            setIsAuth(true)
+            history.push('/loggedin')
+
           } else {
             console.log("user NOT created")
+            history.push('/')
           }
         })
 
