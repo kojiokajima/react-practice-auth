@@ -1,0 +1,9 @@
+.signup {
+    display: flex;
+    flex-direction: column;
+
+    &-name {
+        display: flex;
+        flex-direction: row;
+    }
+}

@@ -9,7 +9,7 @@ import {makeStyles} from '@material-ui/styles'
 const useStyles = makeStyles({
   label: {
     color: "Yello",
-    backgroundColor: "red"
+    // backgroundColor: "red"
   }
 })
 
@@ -112,66 +112,39 @@ const SignUp = () => {
   };
 
   return (
-    <div>
+    <div className="signup">
       <h1>Sign up</h1>
       <form onSubmit={handleSubmitSignup}>
-        {/* <label> */}
-        <InputLabel margin="dense" className={classes.label}>
-          First name
-          {/* <input
-            name="lastname"
-            type="text"
-            placeholder="First Name"
-            onChange={(e) => setFirstName(e.target.value)}
-          /> */}
-          <TextField id="standard-basic" label="First Name" />
-        {/* </label> */}
-        </InputLabel>
-          <br/>
-        {/* <label> */}
-        <InputLabel margin="dense" className={classes.label}>
-          Last name
-          {/* <input
-            name="lastname"
-            type="text"
-            placeholder="Last Name"
-            onChange={(e) => setLastName(e.target.value)}
-          /> */}
-          <TextField id="standard-basic" label="Last Name" />
-        {/* </label> */}
-        </InputLabel>
-        <br/>
-        {/* <label> */}
-        <InputLabel margin="dense" className={classes.label}>
+
+        <div className="signup-name">
+          <InputLabel margin="dense" className={classes.label} onChange={(e) => setFirstName(e.target.value)}>
+            First name
+            <TextField id="standard-basic" type="text" label="First Name" />
+          </InputLabel>
+            <br/>
+
+          <InputLabel margin="dense" className={classes.label} onChange={(e) => setLastName(e.target.value)}>
+            Last name
+            <TextField id="standard-basic" type="text" label="Last Name" />
+          </InputLabel>
+        </div>
+
+        <InputLabel margin="dense" className={classes.label} onChange={handleInputEmail}>
           Email
-          {/* <input
-            name="email"
-            type="email"
-            placeholder="Email"
-            onChange={handleInputEmail}
-          /> */}
-          <TextField id="standard-basic" label="Email" />
-        {/* </label> */}
+          <TextField id="standard-basic" type="email" label="Email" />
         </InputLabel>
         <br/>
-        {/* <label> */}
-        <InputLabel margin="dense" className={classes.label}>
+
+        <InputLabel margin="dense" className={classes.label} onChange={handleInputPassword}> 
           Password
-          {/* <input
-            name="password"
-            type="password"
-            placeholder="Password"
-            onChange={handleInputPassword}
-          /> */}
-          <TextField id="standard-basic" label="Password" />
-        {/* </label> */}
+          <TextField id="standard-basic" type="password" label="Password" />
         </InputLabel>
+        <br/>
+
         <button type="submit">Sign Up</button>
       </form>
-      <br/><br/>
-      <p>
-        <Link to='/signin'>Already have an account?</Link>
-      </p>
+      <br/>
+      <p><Link to='/signin'>Already have an account?</Link></p>
     </div>
   );
 };
