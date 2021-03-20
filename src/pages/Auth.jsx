@@ -1,6 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { Redirect } from "react-router-dom";
-import { auth } from "../firebase/index";
 import {AuthContext} from '../App'
 
 const Auth = (props) => {

@@ -5,24 +5,28 @@ import {SignIn, SignUp} from "./pages/index";
 import { LoginSuccess } from "./pages/LoginSuccess";
 import Page404 from './pages/Page404'
 
-import AuthContentProvider from './pages/AuthContext'
+// export const AuthContext = createContext(false, () => {})
 
 const Router = () => {
+  
+  // const [isAuth, setIsAuth] = useState(false)
+  // console.log("Route.jsx -- isAuth is set to false")
 
   return (
-    <AuthContentProvider>
+    // <AuthContext.Provider value={[isAuth, setIsAuth]}>
+    
       <Switch>
         <Route exact path="(/)?" component={SignUp} />
         <Route exact path="/signin" component={SignIn} />
         <Route exact path="/404" component={Page404} />
 
+        {/* accessable only when the user is authenticated */}
         <Auth>
-          {/* <Switch> */}
             <Route exact path="/loggedin" component={LoginSuccess} />
-          {/* </Switch> */}
         </Auth>
+
       </Switch>
-    </AuthContentProvider>
+    // </AuthContext.Provider>
   );
 };
 
