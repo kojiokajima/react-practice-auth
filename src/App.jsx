@@ -1,4 +1,4 @@
-import './App.css';
+import './App.scss';
 import React, {useState, createContext} from 'react'
 // import SignUp from './pages/SignUp';
 import Router from './Router';

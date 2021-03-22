@@ -1,6 +1,15 @@
 .signup {
     display: flex;
     flex-direction: column;
+    text-align: center;
+    width: 60vw;
+    margin: 0 auto;
+
+
+    & label {
+        display: flex;
+        align-items: center;
+    }
 
     &-name {
         display: flex;

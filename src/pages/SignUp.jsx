@@ -5,10 +5,10 @@ import {AuthContext} from '../App'
 import TextField from '@material-ui/core/TextField'
 import InputLabel from '@material-ui/core/InputLabel'
 import {makeStyles} from '@material-ui/styles'
+import Button from '@material-ui/core/Button'
 
 const useStyles = makeStyles({
   label: {
-    color: "Yello",
     // backgroundColor: "red"
   }
 })
@@ -118,30 +118,31 @@ const SignUp = () => {
 
         <div className="signup-name">
           <InputLabel margin="dense" className={classes.label} onChange={(e) => setFirstName(e.target.value)}>
-            First name
+            <span>First name </span>
             <TextField id="standard-basic" type="text" label="First Name" />
           </InputLabel>
             <br/>
 
           <InputLabel margin="dense" className={classes.label} onChange={(e) => setLastName(e.target.value)}>
-            Last name
+            <span>Last name </span>
             <TextField id="standard-basic" type="text" label="Last Name" />
           </InputLabel>
         </div>
+        <br/>
 
         <InputLabel margin="dense" className={classes.label} onChange={handleInputEmail}>
-          Email
-          <TextField id="standard-basic" type="email" label="Email" />
+          <span>Email </span>
+          <TextField id="standard-basic" type="email" label="Email" fullWidth={true} />
         </InputLabel>
         <br/>
 
         <InputLabel margin="dense" className={classes.label} onChange={handleInputPassword}> 
-          Password
-          <TextField id="standard-basic" type="password" label="Password" />
+          <span>Password </span>
+          <TextField id="standard-basic" type="password" label="Password" fullWidth={true} />
         </InputLabel>
         <br/>
-
-        <button type="submit">Sign Up</button>
+        <br/>
+        <Button variant="contained" color="primary" type="submit" >Sign Up</Button>
       </form>
       <br/>
       <p><Link to='/signin'>Already have an account?</Link></p>
